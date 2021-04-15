@@ -19,13 +19,13 @@ public class TextChangedServlet extends HttpServlet {
        int id = 0;
 
 	@SuppressWarnings("unchecked")
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int idOk = (int) session.getAttribute("idElement");
 		String textChanged = request.getParameter("changeTextInput");
 		List<ToDoObj> toDoListObj = new ArrayList<>();
 		toDoListObj = (List<ToDoObj>) session.getAttribute("list");
-		System.out.println(textChanged);
+		
 		toDoListObj.get(idOk).setNameTodo(textChanged);
 		boolean done = toDoListObj.get(idOk).getChange(); 
 		toDoListObj.get(idOk).setChange(!done); 

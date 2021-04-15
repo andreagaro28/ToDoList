@@ -19,6 +19,7 @@ public class AddToDoServlet extends HttpServlet {
        int id = 0;
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		boolean isSearchActive = false;
 		HttpSession session = request.getSession();
 		String toDoElement = request.getParameter("toDoText");
 		List<ToDoObj> toDoListObj = new ArrayList<>();
@@ -41,7 +42,7 @@ public class AddToDoServlet extends HttpServlet {
 			}
 			session.setAttribute("list", toDoListObj);
 		}
-
+		session.setAttribute("isSearchActive", isSearchActive);
 		request.getRequestDispatcher("/pages/toDo.jsp").forward(request, response);
 	}
 
