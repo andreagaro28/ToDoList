@@ -16,18 +16,23 @@ import it.objectmethod.model.ToDoObj;
 @WebServlet("/DoneServlet")
 public class DoneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       int id = 0;
+	int id = 0;
 
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		int idDone = Integer.parseInt(request.getParameter("doneAt"));
-		List<ToDoObj> toDoListObj = new ArrayList<>();
-		toDoListObj = (List<ToDoObj>) session.getAttribute("list");
-		
-		boolean done = toDoListObj.get(idDone).getDone(); 
-		toDoListObj.get(idDone).setDone(!done); 
-		
+
+		String idDone = request.getParameter("doneAt");
+		if(idDone != null) {
+			HttpSession session = request.getSession();
+			List<ToDoObj> toDoListObj = new ArrayList<>();
+			toDoListObj = (List<ToDoObj>) session.getAttribute("list");
+
+			boolean done = toDoListObj.get(Integer.parseInt(idDone)).getDone(); 
+			toDoListObj.get(Integer.parseInt(idDone)).setDone(!done); 
+			for(ToDoObj i : toDoListObj) {
+				i.setChange(false);
+			}
+		}
 		request.getRequestDispatcher("/pages/toDo.jsp").forward(request, response);
 	}
 }

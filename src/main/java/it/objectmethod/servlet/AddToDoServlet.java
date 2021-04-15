@@ -32,10 +32,12 @@ public class AddToDoServlet extends HttpServlet {
 			ToDoObj toDoObj = new ToDoObj();
 			toDoObj.setNameTodo(toDoElement);
 			toDoObj.setDone(false);
+			toDoObj.setChange(false);
 			toDoListObj.add(toDoObj);	
 			int id = 0;
 			for(ToDoObj i : toDoListObj) {
 				i.setId(id++);
+				i.setChange(false);
 			}
 			session.setAttribute("list", toDoListObj);
 		}

@@ -6,13 +6,14 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <style>
 body {
 	text-align: center;
 }
 
-.line{
+.line {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -22,34 +23,56 @@ body {
 	margin-left: 20%;
 }
 
-.done-button{
+.done-button {
 	margin-right: 20%;
 }
-.text{
+
+.text {
 	font-size: 20px;
 	font-family: cursive;
 }
-.row{width: 50%; user-select: none;}
-.done{
-  text-decoration: line-through;
+
+.row {
+	width: 50%;
+	user-select: none;
 }
 
+.done {
+	text-decoration: line-through;
+}
 </style>
 </head>
 <body>
 	<form action="/todolist/AddToDoServlet">
-		<input type="text" name="toDoText" placeholder="Add to do..." class="alert alert-primary text">
-		<input type="submit" value="Add" class="btn btn-primary">
+		<input type="text" name="toDoText" placeholder="Add to do..."
+			class="alert alert-primary text"> <input type="submit"
+			value="Add" class="btn btn-primary">
 	</form>
 	<c:forEach items="${list}" var="element">
 		<div class="list-group-item list-group-item-warning line">
-			<a href="/todolist/DoneServlet?doneAt=${element.id}" class="done-button btn btn-success">Done</a>
+			<a href="/todolist/DoneServlet?doneAt=${element.id}"
+				class="done-button btn btn-success">Done</a>
 			<c:choose>
 				<c:when test="${element.done}">
 					<div class="done text row">${element.nameTodo}</div>
 				</c:when>
 				<c:otherwise>
-					<div class="text row">${element.nameTodo}</div>
+					<c:choose>
+						<c:when test="${element.change}">
+							<div class="text row">
+								<form action="/todolist/TextChangedServlet?okAt=${element.id}">
+									<input class="row" name="changeTextInput" type="text"
+										value="${element.nameTodo}"> 
+										<input type="submit" value="ok" class="btn btn-info">
+								</form>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="text row">
+								<a href="/todolist/ChangeServlet?changeAt=${element.id}">${element.nameTodo}</a>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</c:otherwise>
 			</c:choose>
 			<a href="/todolist/DeleteServlet?removeAt=${element.id}"

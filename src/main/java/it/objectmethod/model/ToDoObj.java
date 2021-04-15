@@ -4,7 +4,14 @@ public class ToDoObj {
 	private Integer Id;
 	private String nameTodo;
 	private Boolean done;
+	private Boolean change;
 
+	public Boolean getChange() {
+		return change;
+	}
+	public void setChange(Boolean change) {
+		this.change = change;
+	}
 	public Boolean getDone() {
 		return done;
 	}
